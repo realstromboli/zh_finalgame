@@ -399,9 +399,9 @@ RectTransform:
   m_Father: {fileID: 1798823137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 45, y: 46}
-  m_SizeDelta: {x: 95, y: 303}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -183, y: -87}
+  m_SizeDelta: {x: -650, y: -116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &205853899
 MonoBehaviour:
@@ -417,8 +417,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiFill: {fileID: 528268816}
   uiText: {fileID: 1510966460}
-  Duration: 30
+  Duration: 10
   remainingDuration: 0
+  playerControl: {fileID: 0}
+  timerOn: 0
 --- !u!114 &205853900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,10 +764,11 @@ MonoBehaviour:
   isGamepad: 0
   horizontalInput: 0
   verticalInput: 0
+  timerVariable: {fileID: 205853899}
   rb: {fileID: 0}
   weapon: {fileID: 760295576}
-  xRange: 15
-  zRange: 15
+  xRange: 25
+  zRange: 25
   myText: {fileID: 745451242}
   score: 0
   scoreText: {fileID: 0}
@@ -973,7 +976,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -279, y: -129}
+  m_AnchoredPosition: {x: -130, y: -55}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &745451242
@@ -1161,6 +1164,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1242,6 +1246,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18e4a388be789b449bd40fa6fd77721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 612798734}
 --- !u!1 &1046069699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,6 +1558,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 522239839965810087, guid: b3ba697ccf4feef4d860fa6b4d99b0ce, type: 3}
+  itemPrefabs:
+  - {fileID: 1122474531652629420, guid: 4c0e63b9149b3614a9a59031380ab67c, type: 3}
 --- !u!4 &1432416145
 Transform:
   m_ObjectHideFlags: 0

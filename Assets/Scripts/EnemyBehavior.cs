@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public float speed = 1.0f;
+    public float speed;
     private Rigidbody enemyRb;
     private GameObject player;
     void Start()
@@ -19,9 +19,4 @@ public class EnemyBehavior : MonoBehaviour
         enemyRb.AddForce((player.transform.position - transform.position).normalized * speed);
     }
 
-    public GameObject drop;
-    private void OnDestroy()
-    {
-        Instantiate(drop, transform.position, drop.transform.rotation);
-    }
 }

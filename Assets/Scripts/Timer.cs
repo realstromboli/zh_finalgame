@@ -10,6 +10,11 @@ public class Timer : MonoBehaviour
     [SerializeField] private Text uiText;
     public int Duration;
     public int remainingDuration;
+
+    public PlayerControl playerControl;
+
+    public bool timerOn;
+
     private void Start()
     {
         Being(Duration);
@@ -17,12 +22,17 @@ public class Timer : MonoBehaviour
 
     public void Being(int Second)
     {
+        if (timerOn == false)
+        {
+            StartCoroutine(UpdateTimer());
+        }
         remainingDuration = Second;
-        StartCoroutine(UpdateTimer());
+        
     }
 
-    private IEnumerator UpdateTimer()
+    public IEnumerator UpdateTimer()
     {
+        timerOn = true;
         while (remainingDuration >= 0)
         {
             uiText.text = $"{remainingDuration / 60:00} : {remainingDuration % 60:00}";
@@ -36,6 +46,8 @@ public class Timer : MonoBehaviour
     public void OnEnd()
     {
         print("Game Over!");
+        playerControl.OnDisable();
+        timerOn = false;
     }
    
     void Update()

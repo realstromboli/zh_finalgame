@@ -16,7 +16,7 @@ using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float controllerDeadzone = 0.1f;
     [SerializeField] private float gamepadRotateSmoothing = 1000f;
@@ -31,6 +31,8 @@ public class PlayerControl : MonoBehaviour
     private PlayerControls playerControls;
     private PlayerInput playerInput;
 
+    public Timer timerVariable;
+
     //old, dont wan't to remove or deactivate tho. scared to lol
     public Rigidbody2D rb;
     public Weapon weapon;
@@ -42,12 +44,12 @@ public class PlayerControl : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         playerControls.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         playerControls.Disable();
     }
@@ -66,7 +68,7 @@ public class PlayerControl : MonoBehaviour
         HandleInput();
         HandleMovement();
         HandleRotation();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             weapon.Fire();
         }
@@ -81,24 +83,6 @@ public class PlayerControl : MonoBehaviour
         transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
         float verticalInput = Input.GetAxisRaw("Vertical");
         transform.Translate(Vector3.forward * verticalInput * Time.deltaTime * speed);
-
-        
-
-        // below is code from a top down twin stick tutorial but it was in 2D so the atan2 and ScreenToWorldPoint stuff didn't work correctly
-
-        //moveDirection = new Vector3(horizontalInput, verticalInput).normalized;
-        //mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        
-        //void dontinclude
-        //{
-        //    rb.velocity = new Vector3(moveDirection.x * speed, moveDirection.z * speed);
-
-        //    Vector3 aimDirection = mousePosition - rb.position;
-        //    float aimAngle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg - 90f;
-        //    rb.rotation = aimAngle;
-        //}
-    
 
     }
 
@@ -157,8 +141,8 @@ public class PlayerControl : MonoBehaviour
         isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
     }
 
-    public float xRange = 15.0f;
-    public float zRange = 15.0f;
+    public float xRange;
+    public float zRange;
 
     public void stayInbounds() //self explanatory
     {
@@ -194,6 +178,7 @@ public class PlayerControl : MonoBehaviour
         if (collider.tag == "PickupToCollect")
         {
             Destroy(collider.gameObject);
+            timerVariable.Being(10);
         }
     }
     public void updateScore()
