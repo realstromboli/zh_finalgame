@@ -32,6 +32,10 @@ public class PlayerControl : MonoBehaviour
     private PlayerInput playerInput;
 
     public Timer timerVariable;
+    public GameManager gameManagerVariable;
+
+    public bool cantFire;
+    public float fireCooldown;
 
     //old, dont wan't to remove or deactivate tho. scared to lol
     public Rigidbody2D rb;
@@ -59,21 +63,36 @@ public class PlayerControl : MonoBehaviour
         myText.text = "";
         // wanted to put score on screen at the end of 60 seconds but couldnt figure it out
         //Invoke(printScore, 30f);
+        gameManagerVariable = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     
     void Update()
     {
+
+        
         //Move();
-        HandleInput();
-        HandleMovement();
-        HandleRotation();
-        if (Input.GetMouseButtonDown(0))
+        if (gameManagerVariable.isGameActive == true)
         {
-            weapon.Fire();
+            HandleInput();
+            HandleMovement();
+            HandleRotation();
+            if (Input.GetMouseButtonDown(0) && !cantFire)
+            {
+                weapon.Fire();
+                cantFire = true;
+                StartCoroutine(FireCooldown());
+            }
         }
+        
         stayInbounds();
         updateScore();
+    }
+
+    IEnumerator FireCooldown()
+    {
+        yield return new WaitForSeconds(fireCooldown);
+        cantFire = false;
     }
 
     public void Move()
@@ -172,7 +191,12 @@ public class PlayerControl : MonoBehaviour
     {
         Debug.Log(score);
     }
-    private void OnTriggerEnter(Collider collider)
+
+    public bool hasSpamPower;
+    public float powerupDuration;
+    public EnemyBehavior enemyVariable;
+
+    public void OnTriggerEnter(Collider collider)
     {
         score = score + 1;
         if (collider.tag == "PickupToCollect")
@@ -180,11 +204,33 @@ public class PlayerControl : MonoBehaviour
             Destroy(collider.gameObject);
             timerVariable.Being(10);
         }
+        if (collider.tag == "SpamPowerup")
+        {
+            hasSpamPower = true;
+            Destroy(collider.gameObject);
+            
+            //powerupIndicator.SetActive(true);
+            StartCoroutine(PowerupCooldown());
+        }
+        
     }
+
+    IEnumerator PowerupCooldown()
+    {
+        fireCooldown = 0.1f;
+        speed = 20;
+        yield return new WaitForSeconds(powerupDuration);
+        hasSpamPower = false;
+        fireCooldown = 0.4f;
+        speed = 8;
+        //powerupIndicator.SetActive(false);
+    }
+
     public void updateScore()
     {
         myText.text = "" + score;
     }
 
+    
 }
 

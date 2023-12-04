@@ -12,6 +12,7 @@ public class DestroyOOB : MonoBehaviour
 
     private float zRange = 30.0f;
     private float xRange = 30.0f;
+    private float yRange = 5.0f;
     void Update()
     {
         if (transform.position.z > zRange)
@@ -27,6 +28,14 @@ public class DestroyOOB : MonoBehaviour
             Destroy(gameObject);
         }
         else if (transform.position.x < -xRange)
+        {
+            Destroy(gameObject);
+        }
+        if (transform.position.y > yRange)
+        {
+            Destroy(gameObject);
+        }
+        else if (transform.position.y < -yRange)
         {
             Destroy(gameObject);
         }
