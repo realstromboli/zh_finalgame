@@ -10,8 +10,8 @@ public class DestroyOOB : MonoBehaviour
         
     }
 
-    private float zRange = 30.0f;
-    private float xRange = 30.0f;
+    private float zRange = 60.0f;
+    private float xRange = 60.0f;
     private float yRange = 5.0f;
     void Update()
     {

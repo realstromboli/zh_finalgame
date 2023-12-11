@@ -37,6 +37,12 @@ public class PlayerControl : MonoBehaviour
     public bool cantFire;
     public float fireCooldown;
 
+    public GameObject powerupIndicator;
+    private AudioSource playerAudio;
+    public AudioClip gunSound;
+    public AudioClip pickupSound;
+    public AudioClip sparkSound;
+
     //old, dont wan't to remove or deactivate tho. scared to lol
     public Rigidbody2D rb;
     public Weapon weapon;
@@ -61,17 +67,13 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         myText.text = "";
-        // wanted to put score on screen at the end of 60 seconds but couldnt figure it out
-        //Invoke(printScore, 30f);
         gameManagerVariable = GameObject.Find("GameManager").GetComponent<GameManager>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     
     void Update()
     {
-
-        
-        //Move();
         if (gameManagerVariable.isGameActive == true)
         {
             HandleInput();
@@ -79,6 +81,7 @@ public class PlayerControl : MonoBehaviour
             HandleRotation();
             if (Input.GetMouseButtonDown(0) && !cantFire)
             {
+                playerAudio.PlayOneShot(gunSound, 1.0f);
                 weapon.Fire();
                 cantFire = true;
                 StartCoroutine(FireCooldown());
@@ -102,7 +105,6 @@ public class PlayerControl : MonoBehaviour
         transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
         float verticalInput = Input.GetAxisRaw("Vertical");
         transform.Translate(Vector3.forward * verticalInput * Time.deltaTime * speed);
-
     }
 
     void HandleInput()
@@ -115,7 +117,6 @@ public class PlayerControl : MonoBehaviour
     {
         Vector3 move = new Vector3(movement.x, 0, movement.y);
         controller.Move(move * Time.deltaTime * speed);
-
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
@@ -181,7 +182,6 @@ public class PlayerControl : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, zRange);
         }
-
     }
 
     public Text myText;
@@ -201,29 +201,29 @@ public class PlayerControl : MonoBehaviour
         score = score + 1;
         if (collider.tag == "PickupToCollect")
         {
+            playerAudio.PlayOneShot(pickupSound, 1.0f);
             Destroy(collider.gameObject);
             timerVariable.Being(10);
         }
         if (collider.tag == "SpamPowerup")
         {
+            playerAudio.PlayOneShot(sparkSound, 1.0f);
             hasSpamPower = true;
             Destroy(collider.gameObject);
-            
-            //powerupIndicator.SetActive(true);
+            powerupIndicator.gameObject.SetActive(true);
             StartCoroutine(PowerupCooldown());
         }
-        
     }
 
     IEnumerator PowerupCooldown()
     {
         fireCooldown = 0.1f;
-        speed = 20;
+        speed = 25;
         yield return new WaitForSeconds(powerupDuration);
         hasSpamPower = false;
         fireCooldown = 0.4f;
-        speed = 8;
-        //powerupIndicator.SetActive(false);
+        speed = 12;
+        powerupIndicator.gameObject.SetActive(false);
     }
 
     public void updateScore()

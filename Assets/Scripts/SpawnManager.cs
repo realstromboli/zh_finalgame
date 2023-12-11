@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     private float startDelay = 2;
-    private float spawnInterval = 1.5f;
-    private float cansStartDelay = 0.5f;
-    private float cansSpawnInterval = 3f;
+    private float spawnInterval = 2.5f;
+    private float cansStartDelay = 0.1f;
+    private float cansSpawnInterval = 2.5f;
     public GameObject[] enemyPrefabs;
     public GameObject[] itemPrefabs;
     public GameManager gameManagerVariable;
@@ -20,8 +20,8 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    private float spawnRangeX = 20;
-    private float spawnRangeZ = 20;
+    private float spawnRangeX = 35;
+    private float spawnRangeZ = 35;
     void Update()
     {
 
