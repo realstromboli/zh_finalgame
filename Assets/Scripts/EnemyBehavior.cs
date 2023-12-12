@@ -11,22 +11,19 @@ public class EnemyBehavior : MonoBehaviour
     public PlayerControl playerControlVariable;
     public Timer timerVariable;
 
-    private AudioSource enemyAudio;
-    public AudioClip gunSound;
-
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         playerControlVariable = GameObject.Find("Player").GetComponent<PlayerControl>();
         timerVariable = GameObject.Find("Timer").GetComponent<Timer>();
-        enemyAudio = GetComponent<AudioSource>();
     }
 
     
     void Update()
     {
-        enemyRb.AddForce((player.transform.position - transform.position).normalized * enemySpeed);
+        transform.Translate((player.transform.position - transform.position).normalized * enemySpeed * Time.deltaTime);
+        //enemyRb.AddForce((player.transform.position - transform.position).normalized * enemySpeed);
         increaseDifficulty();
         stayInboundsEnemy();
     }
@@ -36,23 +33,23 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (playerControlVariable.score > 10)
         {
-            enemySpeed = 6;
+            enemySpeed = 7.5f;
         }
         if (playerControlVariable.score > 20)
         {
-            enemySpeed = 7;
+            enemySpeed = 10;
         }
         if (playerControlVariable.score > 30)
         {
-            enemySpeed = 8;
+            enemySpeed = 12.5f;
         }
         if (playerControlVariable.score > 40)
         {
-            enemySpeed = 9;
+            enemySpeed = 15;
         }
         if (playerControlVariable.score > 50)
         {
-            enemySpeed = 10;
+            enemySpeed = 17.5f;
         }
         if (playerControlVariable.score > 60)
         {
@@ -60,11 +57,11 @@ public class EnemyBehavior : MonoBehaviour
         }
         if (playerControlVariable.score > 70)
         {
-            enemySpeed = 30;
+            enemySpeed = 22.5f;
         }
         if (playerControlVariable.score > 80)
         {
-            enemySpeed = 40;
+            enemySpeed = 25;
         }
         if (playerControlVariable.score > 90)
         {
@@ -104,7 +101,6 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            
             Destroy(gameObject);
             timerVariable.remainingDuration = timerVariable.remainingDuration - 2;
         }

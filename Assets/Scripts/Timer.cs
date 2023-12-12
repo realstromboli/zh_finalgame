@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     public int Duration;
     public int remainingDuration;
 
-    public PlayerControl playerControl;
+    public PlayerControl playerControlVariable;
     public GameManager gameManagerVariable;
 
     public bool timerOn;
@@ -19,6 +19,7 @@ public class Timer : MonoBehaviour
     private void Start()
     {
         //Being(Duration);
+        playerControlVariable = GameObject.Find("Player").GetComponent<PlayerControl>();
     }
 
     public void Being(int Second)
@@ -48,7 +49,7 @@ public class Timer : MonoBehaviour
     {
         gameManagerVariable = GameObject.Find("GameManager").GetComponent<GameManager>();
         
-        print("Game Over!");
+        print("Game Over! Score was " + playerControlVariable.score);
         timerOn = false;
         gameManagerVariable.GameOver();
     }

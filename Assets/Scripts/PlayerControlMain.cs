@@ -42,6 +42,7 @@ public class PlayerControl : MonoBehaviour
     public AudioClip gunSound;
     public AudioClip pickupSound;
     public AudioClip sparkSound;
+    public AudioClip hitSound;
 
     //old, dont wan't to remove or deactivate tho. scared to lol
     public Rigidbody2D rb;
@@ -198,20 +199,26 @@ public class PlayerControl : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
-        score = score + 1;
+        
         if (collider.tag == "PickupToCollect")
         {
+            score = score + 1;
             playerAudio.PlayOneShot(pickupSound, 1.0f);
             Destroy(collider.gameObject);
             timerVariable.Being(10);
         }
         if (collider.tag == "SpamPowerup")
         {
+            score = score + 1;
             playerAudio.PlayOneShot(sparkSound, 1.0f);
             hasSpamPower = true;
             Destroy(collider.gameObject);
             powerupIndicator.gameObject.SetActive(true);
             StartCoroutine(PowerupCooldown());
+        }
+        if (collider.tag == "Enemy")
+        {
+            playerAudio.PlayOneShot(hitSound, 1.0f);
         }
     }
 
