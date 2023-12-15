@@ -83,7 +83,7 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && !cantFire)
             {
                 playerAudio.PlayOneShot(gunSound, 1.0f);
-                weapon.Fire();
+                weapon.CallFire();
                 cantFire = true;
                 StartCoroutine(FireCooldown());
             }

@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a5f601006e68749bb138eaad0ef96b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossEnemyVariable: {fileID: 0}
+  playerControlVariable: {fileID: 0}
   speed: 40
 --- !u!114 &-9088648304124002121
 MonoBehaviour:

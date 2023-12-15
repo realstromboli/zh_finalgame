@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     private float startDelay = 2;
     private float spawnInterval = 2.5f;
     private float cansStartDelay = 0.1f;
-    private float cansSpawnInterval = 2.5f;
+    private float cansSpawnInterval = 2.25f;
     public GameObject[] enemyPrefabs;
     public GameObject[] itemPrefabs;
     public GameManager gameManagerVariable;
@@ -31,7 +31,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (gameManagerVariable.isGameActive == true)
         {
-            int enemyIndex = Random.Range(0, 2);
+            int enemyIndex = Random.Range(0, 4);
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
             Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
         }
