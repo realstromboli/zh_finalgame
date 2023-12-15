@@ -91,6 +91,10 @@ public class PlayerControl : MonoBehaviour
         
         stayInbounds();
         updateScore();
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     IEnumerator FireCooldown()
